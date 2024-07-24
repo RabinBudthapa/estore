@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <!-- Breadcrumb End -->
+
+        <!-- Cart Start -->
+        <div class="cart-page">
+            <div class="container-fluid">
+                <h4>Your Order List</h4>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart-page-inner">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                    {% for cart in my_cart %}
+                                        <tr>
+                                            <td>
+                                                <div class="img">
+                                                    <a href="#"><img src="{{cart.items.image.url}}" alt="Image"></a>
+                                                    <p>{{cart.items.name}}</p>
+                                                </div>
+                                            </td>
+                                            {% if cart.items.discounted_price > 0 %}
+                                            <td>Rs. {{cart.items.discounted_price}}</td>
+                                            {% else %}
+                                            <td>Rs. {{cart.items.price}}</td>
+                                            {% endif %}
+                                            <td>
+                                                <div class="qty">
+
+                                                    <input type="text" value="{{cart.quantity}}">
+
+                                                </div>
+                                            </td>
+                                            <td>Rs. {{cart.total}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart-page-inner">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="cart-summary">
+                                        <div class="cart-content">
+                                            <h2>Total Amount<span>Rs. {{grand_total}}</span></h2>
+                                        </div>
+                                        <div class="cart-btn">
+
+                                          <button id="payment-button">Pay with Khalti</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cart End -->
+
+
+<html>
+<head>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_32cc3f64f73544318e2d72dbac24c4d6",
+            "productIdentity": "order_{{order.id}}",
+            "productName": "order_{{order.id}}",
+            "productUrl": "http://localhost:8000",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    axios.get("/khaltiverify/", {
+                        params: {
+                            "token": payload.token,
+                            "amount": payload.amount,
+                            "order_id": "{{order.id}}"
+                        }
+                    }).then(function(resp){
+                      if (resp.data.success == true){
+                            alert("Thanks. Payment Completed Successfully")
+                            location.href = "/"
+                        }else{
+                            alert("Sorry. Error occurred")
+                            location.href = "{{request.build_absolute_uri}}"
+                        }
+
+                    })
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({amount:{{order.total}} * 100});
+        }
+    </script>
+
+</body>
+</html>
+ {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <!-- Contact Start -->
+        <div class="contact">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="contact-form">
+                            <form action="{% url 'customer' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input name="name" type="text" class="form-control" placeholder="Your Name" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="post" type="text" class="form-control" placeholder="Your post" />
+                                    </div>
+                                </div>
+
+                                    <input name="image" type="file" class="form-control" placeholder="Upload Image" />
+
+                                <div class="form-group">
+                                    <textarea name="comment" class="form-control" rows="5" placeholder="comment"></textarea>
+                                </div>
+                                <div><button href="/customerreview" class="btn" type="submit">Send Message</button></div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+        {% endblock %}
+

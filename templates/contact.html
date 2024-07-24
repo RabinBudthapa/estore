@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+        
+        <!-- Contact Start -->
+        <div class="contact">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="contact-info">
+                            <h2>Our Office</h2>
+                            <h3><i class="fa fa-map-marker"></i>Lalitpur,Dhapakhel</h3>
+                            <h3><i class="fa fa-envelope"></i>Rabin@gmail.com</h3>
+                            <h3><i class="fa fa-phone"></i>9840893123</h3>
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="contact-info">
+                            <h2>Our Store</h2>
+                            <h3><i class="fa fa-map-marker"></i>Lalitpur,Dhapakhel</h3>
+                            <h3><i class="fa fa-envelope"></i>Rabin@gmail.com</h3>
+                            <h3><i class="fa fa-phone"></i>9840893123</h3>
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="contact-form">
+                            <form action="{% url 'contactus' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input name="name" type="text" class="form-control" placeholder="Your Name" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="email" type="email" class="form-control" placeholder="Your Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input name="subject" type="text" class="form-control" placeholder="Subject" />
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" rows="5" placeholder="Message"></textarea>
+                                </div>
+                                <div><button href="/contactus" class="btn" type="submit">Send Message</button></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="contact-map">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.493048166887!2d85.32766541864697!3d27.63297764657425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb171456dbe1f3%3A0xc8e0b4e84415cd!2sShree%20Seta%20Ganesh%20Mandir!5e0!3m2!1sen!2snp!4v1721794501900!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+        {% endblock %}
+        

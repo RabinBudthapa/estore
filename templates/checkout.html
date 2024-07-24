@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+         <style>
+             .button:hover{
+             background-color:black;
+             color:tomato;
+             }
+         </style>
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Products</a></li>
+                    <li class="breadcrumb-item active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+        <!-- Checkout Start -->
+        <div class="checkout">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="checkout-inner">
+                            <form method="POST">
+                                {% csrf_token %}
+                                 {{ form.as_p }}
+                                     <button style="color:black;background-color:tomato;border-radius:4px;width:100%;border:white;
+                                         font-size:30px;font-family:monospace;
+                                        padding:5px;">Place Order</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout End -->
+
+
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <!-- Product List Start -->
+        <div class="product-view">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                             {% for cat in cat_products %}
+                            <div class="col-md-4">
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="/product/{{cat.slug}}">{{cat.name}}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="product-detail.html">
+                                            <img src="{{cat.image.url}}" alt="Product Image">
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="/add_to_cart/{{cat.slug}}"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="/add_to_wishlist/{{cat.slug}}"><i class="fa fa-heart"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        {% if cat.discounted_price > 0 %}
+                                        <h3><span>Rs.</span>{{cat.discounted_price}}</h3>
+                                        {% else %}
+                                        <h3><span>Rs.</span>{{cat.price}}</h3>
+                                        {% endif %}
+
+                                        <a class="btn" href="/add_to_cart/{{cat.slug}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
+                        <div class="sidebar-widget category">
+                            <h2 class="title">Category</h2>
+                            <nav class="navbar bg-light">
+                                <ul class="navbar-nav">
+                                    {% for cat in categories %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/category/{{cat.slug}}"><i class="fa fa-{{cat.logo}}"></i>{{cat.name}}</a>
+                                    </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="sidebar-widget widget-slider">
+                            <div class="sidebar-slider normal-slider">
+                                {% for sale in sales %}
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="#">{{sale.name}}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="product-detail.html">
+                                            <img src="{{sale.image.url}}" alt="Product Image">
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="/add_to_cart/{{sale.slug}}"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="/add_to_wishlist/{{sale.slug}}"><i class="fa fa-heart"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        {% if sale.discounted_price > 0 %}
+                                        <h3><span>Rs.</span>{{sale.discounted_price}}</h3>
+                                        {% else %}
+                                        <h3><span>Rs.</span>{{sale.price}}</h3>
+                                        {% endif %}
+                                        <a class="btn" href="/add_to_cart/{{sale.slug}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+                        <div class="sidebar-widget brands">
+                            <h2 class="title">Our Brands</h2>
+                            <ul>
+                                {% for brand in brands %}
+                                <li><a href="/brand/{{brand.slug}}">{{brand.name}} </a><span></span></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Side Bar End -->
+                </div>
+            </div>
+        </div>
+        <!-- Product List End -->
+
+{% endblock %}
+
