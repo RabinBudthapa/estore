@@ -271,6 +271,7 @@ def Checkout(request):
             order_detail.username = request.user.username
             order_detail.save()
 
+            # Calculate subtotal and grand total
             username = request.user.username
             cart_items = Cart.objects.filter(username=username, checkout=False)
             subtotal = sum(i.total for i in cart_items)
@@ -278,6 +279,18 @@ def Checkout(request):
             grand_total = subtotal + delivery_charge
             cart_items.update(grandtotal=grand_total)
 
+            # Update order_detail with grand total
+            order_detail.total = grand_total
+            order_detail.save()
+
+            # Create OrderItem for each item in the cart
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order_detail,
+                    product=item.items,
+                    quantity=item.quantity,
+                    price=item.total,
+                )
 
             if order_detail.payment_method == "Khalti":
               return redirect("/khaltirequest" + "?o_id=" + str(order_detail.id))

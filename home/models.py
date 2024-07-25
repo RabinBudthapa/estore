@@ -110,7 +110,7 @@ class OrderDetail(models.Model):
     phone_number = models.CharField(max_length=500)
     address = models.CharField(max_length=500)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES, default="Cash On Delivery")
-    total = models.PositiveIntegerField(default=10)
+    total = models.PositiveIntegerField(default=0)
     payment_completed = models.BooleanField(default=False, null=True, blank=True)
     order_status = models.CharField(max_length=50, choices=ORDER_STATUS,default="Order Processing")
 
@@ -126,7 +126,8 @@ class OrderItem(models.Model):
 
 
     def __str__(self):
-        return self.order.user.username
+        return f"{self.product.name} ({self.quantity})"
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=200)
